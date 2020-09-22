@@ -3,13 +3,16 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http
 import { Observable, throwError } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
 import { Operabile } from '../models/operabile'
-
+import { Cantiere } from '../models/cantiere'
+import { Operazione } from '../models/operazione';
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
 
   attr_path = 'http://localhost:8080/api/attrezzature';
+  cant_path = 'http://localhost:8080/api/cantieri';
+  op_attr_path = 'http://localhost:8080/api/operazione/attrezzatura';
   constructor(private http: HttpClient) { }
 
   httpOptions = {
@@ -18,6 +21,15 @@ export class ApiService {
     })
   }
 
+  creaOperazione(item): Observable<boolean> {
+    return this.http
+      .post<boolean>(this.op_attr_path, JSON.stringify(item), this.httpOptions)
+      .pipe(
+        retry(2),
+        catchError(this.handleError)
+      )
+  }
+  
   handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {
       // A client-side or network error occurred. Handle it accordingly.
@@ -37,6 +49,25 @@ export class ApiService {
   getAttrezzature(): Observable<Operabile> {
     return this.http
       .get<Operabile>(this.attr_path)
+      .pipe(
+        retry(2),
+        catchError(this.handleError)
+      )
+  }
+
+  getAttrezzatura(id): Observable<Operabile> {
+    return this.http
+      .get<Operabile>(this.attr_path + '/' + id)
+      .pipe(
+        retry(2),
+        catchError(this.handleError)
+      )
+
+  }
+
+  getCantieri(): Observable<Cantiere> {
+    return this.http
+      .get<Cantiere>(this.cant_path)
       .pipe(
         retry(2),
         catchError(this.handleError)

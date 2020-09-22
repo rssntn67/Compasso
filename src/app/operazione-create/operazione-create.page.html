@@ -1,0 +1,68 @@
+<ion-header translucent>
+  <ion-toolbar color="primary">
+    <ion-title size="large">Compasso - Carica Attrezzatura al Cantiere</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content color="primary" fullscreen>
+
+  <ion-item color="warning">
+    <div slot="">
+      <h2>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Attrezzatura: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h2>
+     </div>
+  
+    <div slot="">
+    <h2>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{data.identificativo}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h2>
+   </div>
+
+  <div slot="">
+    <h3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{data.modello}}&nbsp;&nbsp;&nbsp;&nbsp;</h3>
+  </div>
+
+  <div slot="">
+    <h3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>{{data.stato}}</i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h3>
+  </div>
+  </ion-item>
+
+<ion-list style="background: var(--ion-color-primary);">
+
+    <ion-item color="primary" *ngFor="let cant of cantData">
+      <ion-icon [name]="getIcon(cant)" slot="start">
+
+      </ion-icon>
+      
+      <div slot="">
+        <h2>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{cant.identificativo}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h2>
+      </div>
+
+      <div slot="">
+        <h3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{cant.tipo}}&nbsp;&nbsp;&nbsp;&nbsp;</h3>
+      </div>
+
+      <div slot="">
+        <h3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>{{cant.stato}}</i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h3>
+      </div>
+
+      <div slot="">
+        <h3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>{{cant.sitoIn}}</i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h3>
+      </div>
+
+      <div slot="">
+        <ion-button color="tertiary" size="default" (click)="carica(cant.identificativo)">
+          <ion-icon name="navigate-outline"></ion-icon>
+          Carica {{data.identificativo}}
+        </ion-button>
+            </div>
+    </ion-item>
+  </ion-list>
+
+  <ion-button color="tertiary" size="default" routerLink='/attrezzature'>
+    <ion-icon name="notifications"></ion-icon>
+    Attrezzature
+  </ion-button>
+  <ion-button color="tertiary" size="default" routerLink='/home'>
+    <ion-icon name="home"></ion-icon>
+    Home
+  </ion-button>
+
+</ion-content>

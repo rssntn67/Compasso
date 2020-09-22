@@ -1,0 +1,62 @@
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ApiService } from '../services/api.service';
+import { Cantiere} from '../models/cantiere';
+import { Operabile } from '../models/operabile';
+import { Operazione } from '../models/operazione';
+
+
+@Component({
+  selector: 'app-operazione-create',
+  templateUrl: './operazione-create.page.html',
+  styleUrls: ['./operazione-create.page.scss'],
+})
+export class OperazioneCreatePage implements OnInit {
+
+  cantData: any;
+  data: Operabile;
+  id: string;
+
+  constructor(public apiService: ApiService,public activatedRoute: ActivatedRoute,
+    public router: Router) { 
+    this.cantData=[];
+    this.data = new Operabile();
+  }
+
+  ngOnInit() {
+  }
+
+  ionViewWillEnter() {
+    this.id = this.activatedRoute.snapshot.params["id"];
+    this.apiService.getAttrezzatura(this.id).subscribe(response => {
+      console.log(response);
+      this.data = response;
+    })
+    this.getCantieri();
+  }
+
+  getIcon(cantiere){
+    if(cantiere.stato.indexOf('InOpera') >= 0) return 'checkmark-circle';
+    else return 'stopwatch';
+  }
+
+  getCantieri() {
+    //Get saved list of students
+    this.apiService.getCantieri().subscribe(response => {
+      console.log(response);
+      this.cantData = response;
+    })  
+  }
+
+  carica(cantiereId:string) {
+    const operazione = new Operazione(cantiereId,this.data.identificativo);
+  
+    this.apiService.creaOperazione(operazione).subscribe(response => {
+      console.log(response);
+    })
+    this.router.navigate(['attrezzature']);
+  }
+
+
+
+}

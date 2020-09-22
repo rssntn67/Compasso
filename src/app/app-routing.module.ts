@@ -19,6 +19,10 @@ const routes: Routes = [
     path: 'about',
     loadChildren: () => import('./about/about.module').then( m => m.AboutPageModule)
   },
+  {
+    path: 'operazione-create/:id',
+    loadChildren: () => import('./operazione-create/operazione-create.module').then( m => m.OperazioneCreatePageModule)
+  },
 ];
 
 @NgModule({

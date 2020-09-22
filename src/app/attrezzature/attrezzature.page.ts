@@ -17,15 +17,18 @@ export class AttrezzaturePage implements OnInit {
   
 
   ngOnInit() {
-    this.getattrezzature();
   }
 
+  ionViewWillEnter() {
+    this.getAttrezzature();
+  }
+  
   getIcon(operabile){
     if(operabile.stato.indexOf('Disponibile') >= 0) return 'checkmark-circle';
     else return 'stopwatch';
   }
 
-  getattrezzature() {
+  getAttrezzature() {
     //Get saved list of students
     this.apiService.getAttrezzature().subscribe(response => {
       console.log(response);
