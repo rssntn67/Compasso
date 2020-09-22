@@ -1,5 +1,7 @@
 {
   "name": "Compasso",
-  "integrations": {},
+  "integrations": {
+    "capacitor": {}
+  },
   "type": "angular"
 }
