@@ -19,7 +19,6 @@ npm-debug.log*
 
 /.idea
 /.ionic
-/.gradle
 /.sass-cache
 /.sourcemaps
 /.versions
