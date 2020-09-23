@@ -23,6 +23,10 @@ const routes: Routes = [
     path: 'operazione-create/:id',
     loadChildren: () => import('./operazione-create/operazione-create.module').then( m => m.OperazioneCreatePageModule)
   },
+  {
+    path: 'config',
+    loadChildren: () => import('./config/config.module').then( m => m.ConfigPageModule)
+  },
 ];
 
 @NgModule({

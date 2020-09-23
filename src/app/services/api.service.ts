@@ -5,14 +5,18 @@ import { retry, catchError } from 'rxjs/operators';
 import { Operabile } from '../models/operabile'
 import { Cantiere } from '../models/cantiere'
 import { Operazione } from '../models/operazione';
+import { Config } from '../models/config';
+
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
 
-  attr_path = 'http://localhost:8080/api/attrezzature';
-  cant_path = 'http://localhost:8080/api/cantieri';
-  op_attr_path = 'http://localhost:8080/api/operazione/attrezzatura';
+  attr_path = '/api/attrezzature';
+  cant_path = '/api/cantieri';
+  op_attr_path = '/api/operazione/attrezzatura';
+  config = new Config('http://localhost:8080','nokey');
+  
   constructor(private http: HttpClient) { }
 
   httpOptions = {
@@ -23,7 +27,7 @@ export class ApiService {
 
   creaOperazione(item): Observable<boolean> {
     return this.http
-      .post<boolean>(this.op_attr_path, JSON.stringify(item), this.httpOptions)
+      .post<boolean>(this.config.baseUrl+this.op_attr_path, JSON.stringify(item), this.httpOptions)
       .pipe(
         retry(2),
         catchError(this.handleError)
@@ -48,7 +52,7 @@ export class ApiService {
 
   getAttrezzature(): Observable<Operabile> {
     return this.http
-      .get<Operabile>(this.attr_path)
+      .get<Operabile>(this.config.baseUrl+this.attr_path)
       .pipe(
         retry(2),
         catchError(this.handleError)
@@ -57,7 +61,7 @@ export class ApiService {
 
   getAttrezzatura(id): Observable<Operabile> {
     return this.http
-      .get<Operabile>(this.attr_path + '/' + id)
+      .get<Operabile>(this.config.baseUrl+this.attr_path + '/' + id)
       .pipe(
         retry(2),
         catchError(this.handleError)
@@ -65,9 +69,17 @@ export class ApiService {
 
   }
 
+  setConfig(config) {
+    this.config=config;
+  }
+
+  getConfig(): Config {
+    return this.config;
+  }
+
   getCantieri(): Observable<Cantiere> {
     return this.http
-      .get<Cantiere>(this.cant_path)
+      .get<Cantiere>(this.config.baseUrl+this.cant_path)
       .pipe(
         retry(2),
         catchError(this.handleError)

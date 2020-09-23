@@ -1,0 +1,25 @@
+<ion-header translucent>
+  <ion-toolbar color="primary">
+    <ion-title>Compasso - Configurazione</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content color="primary" fullscreen>
+
+  <ion-item>
+    <ion-label>baseUrl</ion-label>
+    <ion-input [(ngModel)]="config.baseUrl" placeholder="enter BaseUrl"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label>apiKey</ion-label>
+    <ion-input [(ngModel)]="config.apiKey" placeholder="Enter Api Key"></ion-input>
+  </ion-item>
+  <ion-button (click)="update()" color="tertiary" size="default">
+    Update
+  </ion-button>
+
+  <ion-button color="tertiary" size="default" routerLink='/home'>
+    <ion-icon name="home"></ion-icon>Home
+  </ion-button>
+
+</ion-content>
