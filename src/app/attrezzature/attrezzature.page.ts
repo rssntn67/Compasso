@@ -19,8 +19,8 @@ export class AttrezzaturePage implements OnInit {
   ngOnInit() {
   }
 
-  ionViewWillEnter() {
-    this.getAttrezzature();
+  async ionViewDidEnter() {
+    await this.getAttrezzature();
   }
   
   getIcon(operabile){
@@ -28,9 +28,9 @@ export class AttrezzaturePage implements OnInit {
     else return 'stopwatch';
   }
 
-  getAttrezzature() {
+  async getAttrezzature() {
     //Get saved list of students
-    this.apiService.getAttrezzature().subscribe(response => {
+    await this.apiService.getAttrezzature().subscribe(response => {
       console.log(response);
       this.attrData = response;
     })  

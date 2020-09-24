@@ -3,9 +3,10 @@ export class Operazione {
     operabileId:string;
     tipo:string;
 
-    constructor(cantiereId:string, operabileId:string) {
+    constructor(cantiereId:string, operabileId:string,tipo:string) {
         this.cantiereId=cantiereId;
         this.operabileId=operabileId;
-        this.tipo='Carico'
+        this.tipo=tipo;
     }
+
 }

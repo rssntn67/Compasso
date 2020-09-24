@@ -9,13 +9,20 @@
   <ion-item color="warning">
     <div slot="">
     <p><b>{{data.identificativo}}</b> - <i>{{data.stato}}</i></p>
-  </div>
+    </div>
+    <div slot="">
+      <ion-button color="tertiary" size="small" (click)="scarica()"><ion-icon name="navigate-outline"></ion-icon>Scarica</ion-button>
+    </div>
+    <div slot="">
+      <ion-button color="tertiary" size="small" (click)="rubato()"><ion-icon name="navigate-outline"></ion-icon>Rubato</ion-button>
+      <ion-button color="tertiary" size="small" (click)="rotto()"><ion-icon name="navigate-outline"></ion-icon>Rotto</ion-button>
+      <ion-button color="tertiary" size="small" (click)="smarrito()"><ion-icon name="navigate-outline"></ion-icon>Smarrito</ion-button>
+    </div>
   </ion-item>
 
 <ion-list style="background: var(--ion-color-primary);">
 
     <ion-item color="primary" *ngFor="let cant of cantData">
-      
       <div slot="">
         <p><b>{{cant.identificativo}}</b></p>
         <p>{{cant.tipo}}</p>
@@ -24,11 +31,8 @@
       </div>
 
       <div slot="">
-        <ion-button color="tertiary" size="small" (click)="carica(cant.identificativo)">
-          <ion-icon name="navigate-outline"></ion-icon>
-          Carica {{data.identificativo}}
-        </ion-button>
-            </div>
+        <ion-button color="tertiary" size="small" (click)="carica(cant.identificativo)"><ion-icon name="navigate-outline"></ion-icon>Carica</ion-button>
+      </div>
     </ion-item>
   </ion-list>
 

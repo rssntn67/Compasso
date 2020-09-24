@@ -49,7 +49,7 @@ export class OperazioneCreatePage implements OnInit {
   }
 
   carica(cantiereId:string) {
-    const operazione = new Operazione(cantiereId,this.data.identificativo);
+    const operazione = new Operazione(cantiereId,this.data.identificativo,'Carico');
   
     this.apiService.creaOperazione(operazione).subscribe(response => {
       console.log(response);
@@ -57,6 +57,41 @@ export class OperazioneCreatePage implements OnInit {
     this.router.navigate(['attrezzature']);
   }
 
+  scarica() {
+    const operazione = new Operazione(null,this.data.identificativo,'Scarico');
+  
+    this.apiService.creaOperazione(operazione).subscribe(response => {
+      console.log(response);
+    })
+    this.router.navigate(['attrezzature']);
+  }
+
+  rubato() {
+    const operazione = new Operazione(null,this.data.identificativo,'Furto');
+  
+    this.apiService.creaOperazione(operazione).subscribe(response => {
+      console.log(response);
+    })
+    this.router.navigate(['attrezzature']);
+  }
+
+  rotto() {
+    const operazione = new Operazione(null,this.data.identificativo,'Rottura');
+  
+    this.apiService.creaOperazione(operazione).subscribe(response => {
+      console.log(response);
+    })
+    this.router.navigate(['attrezzature']);
+  }
+
+  smarrito() {
+    const operazione = new Operazione(null,this.data.identificativo,'Smarrimento');
+  
+    this.apiService.creaOperazione(operazione).subscribe(response => {
+      console.log(response);
+    })
+    this.router.navigate(['attrezzature']);
+  }
 
 
 }
