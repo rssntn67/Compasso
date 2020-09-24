@@ -6,6 +6,9 @@ import { Operabile } from '../models/operabile'
 import { Cantiere } from '../models/cantiere'
 import { Operazione } from '../models/operazione';
 import { Config } from '../models/config';
+import { Plugins, FilesystemDirectory, FilesystemEncoding } from '@capacitor/core';
+
+const {Filesystem} = Plugins;
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +21,6 @@ export class ApiService {
   config = new Config('http://localhost:8080','nokey');
   
   constructor(private http: HttpClient) { 
-    console.log(this.config)
   }
 
   httpOptions = {
@@ -53,7 +55,6 @@ export class ApiService {
   };
 
   getAttrezzature(): Observable<Operabile> {
-    console.log(this.config)
     return this.http
       .get<Operabile>(this.config.baseUrl+this.attr_path)
       .pipe(
@@ -72,10 +73,6 @@ export class ApiService {
 
   }
 
-  setConfig(config) {
-    this.config=config;
-  }
-
   getConfig(): Config {
     return this.config;
   }
@@ -88,5 +85,40 @@ export class ApiService {
         catchError(this.handleError)
       )
   }
+
+   async saveConfig(config: Config) {
+    try {
+      const result = await Filesystem.writeFile({
+        path: 'secrets/config.json',
+        data: JSON.stringify(config),
+        directory: FilesystemDirectory.Data,
+        encoding: FilesystemEncoding.UTF8
+      })
+      this.config=config;
+      console.log('Wrote file', result, this.config);
+    } catch(e) {
+      console.error('Unable to write file', e);
+    }
+
+  }
+
+  async loadSaved() {
+    try {
+      let ret = await Filesystem.stat({
+        path: 'secrets/config.json',
+        directory: FilesystemDirectory.Data
+      });
+      const readFile = await Filesystem.readFile({
+        path: 'secrets/config.json',
+        directory: FilesystemDirectory.Data
+      });
+      this.config = JSON.parse(readFile.data);
+      console.log('loadSaved: from cache', this.config);
+    } catch(e) {
+      this.saveConfig(this.config);
+      console.log('loadSaved: from default', this.config);
+    }
+  }
+
 
 }

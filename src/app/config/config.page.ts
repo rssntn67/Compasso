@@ -12,12 +12,12 @@ export class ConfigPage implements OnInit {
   config: Config;
   constructor(public apiService: ApiService) { }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.config = this.apiService.getConfig();
   }
 
   update() {
-    this.apiService.setConfig(this.config);
+    this.apiService.saveConfig(this.config);
   }
 
 }

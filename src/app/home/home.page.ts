@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ApiService } from '../services/api.service';
 
 @Component({
   selector: 'app-home',
@@ -7,6 +8,11 @@ import { Component } from '@angular/core';
 })
 export class HomePage {
 
-  constructor() {}
+  constructor(public apiService: ApiService) { }
+
+  async ngOnInit() {
+    await this.apiService.loadSaved();
+  }
+
 
 }
