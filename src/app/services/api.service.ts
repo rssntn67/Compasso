@@ -17,7 +17,9 @@ export class ApiService {
   op_attr_path = '/api/operazione/attrezzatura';
   config = new Config('http://localhost:8080','nokey');
   
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) { 
+    console.log(this.config)
+  }
 
   httpOptions = {
     headers: new HttpHeaders({
@@ -51,6 +53,7 @@ export class ApiService {
   };
 
   getAttrezzature(): Observable<Operabile> {
+    console.log(this.config)
     return this.http
       .get<Operabile>(this.config.baseUrl+this.attr_path)
       .pipe(

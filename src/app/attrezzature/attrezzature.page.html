@@ -1,6 +1,6 @@
 <ion-header translucent>
   <ion-toolbar color="primary">
-    <ion-title>Compasso - Lista Attrezzature</ion-title>
+    <ion-title>Compasso: Attrezzature</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -9,26 +9,17 @@
   <ion-list style="background: var(--ion-color-primary);">
 
     <ion-item color="primary" *ngFor="let todo of attrData">
-      <ion-icon [name]="getIcon(todo)" slot="start">
-
-      </ion-icon>
       
       <div slot="">
-        <h2>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{todo.identificativo}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h2>
+        <p><b>{{todo.identificativo}}</b></p>
+        <p><ion-icon [name]="getIcon(todo)"></ion-icon><i>{{todo.stato}}</i></p>
+        <p>{{todo.modello}}</p>
       </div>
 
       <div slot="">
-        <h3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{todo.modello}}&nbsp;&nbsp;&nbsp;&nbsp;</h3>
-      </div>
-
-      <div slot="">
-        <h3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>{{todo.stato}}</i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h3>
-      </div>
-
-      <div slot="">
-        <ion-button color="tertiary" size="default" routerLink='/operazione-create/{{todo.identificativo}}'>
+        <ion-button color="tertiary" size="small" routerLink='/operazione-create/{{todo.identificativo}}'>
           <ion-icon name="navigate-outline"></ion-icon>
-          Carica al Cantiere
+          Carica
         </ion-button>
             </div>
     </ion-item>

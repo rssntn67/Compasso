@@ -1,6 +1,6 @@
 <ion-header translucent>
   <ion-toolbar color="primary">
-    <ion-title size="large">Compasso - Carica Attrezzatura al Cantiere</ion-title>
+    <ion-title size="large">Compasso: Carica Attrezzatura</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -8,47 +8,23 @@
 
   <ion-item color="warning">
     <div slot="">
-      <h2>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Attrezzatura: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h2>
-     </div>
-  
-    <div slot="">
-    <h2>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{data.identificativo}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h2>
-   </div>
-
-  <div slot="">
-    <h3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{data.modello}}&nbsp;&nbsp;&nbsp;&nbsp;</h3>
-  </div>
-
-  <div slot="">
-    <h3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>{{data.stato}}</i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h3>
+    <p><b>{{data.identificativo}}</b> - <i>{{data.stato}}</i></p>
   </div>
   </ion-item>
 
 <ion-list style="background: var(--ion-color-primary);">
 
     <ion-item color="primary" *ngFor="let cant of cantData">
-      <ion-icon [name]="getIcon(cant)" slot="start">
-
-      </ion-icon>
       
       <div slot="">
-        <h2>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{cant.identificativo}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h2>
+        <p><b>{{cant.identificativo}}</b></p>
+        <p>{{cant.tipo}}</p>
+        <p><ion-icon [name]="getIcon(cant)"></ion-icon><i>{{cant.stato}}</i></p>
+        <p>sito In <i>{{cant.sitoIn}}</i></p>
       </div>
 
       <div slot="">
-        <h3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{cant.tipo}}&nbsp;&nbsp;&nbsp;&nbsp;</h3>
-      </div>
-
-      <div slot="">
-        <h3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>{{cant.stato}}</i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h3>
-      </div>
-
-      <div slot="">
-        <h3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>{{cant.sitoIn}}</i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h3>
-      </div>
-
-      <div slot="">
-        <ion-button color="tertiary" size="default" (click)="carica(cant.identificativo)">
+        <ion-button color="tertiary" size="small" (click)="carica(cant.identificativo)">
           <ion-icon name="navigate-outline"></ion-icon>
           Carica {{data.identificativo}}
         </ion-button>
