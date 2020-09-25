@@ -30,6 +30,7 @@ export class ApiService {
   }
 
   creaOperazione(item): Observable<boolean> {
+    console.log(item);
     return this.http
       .post<boolean>(this.config.baseUrl+this.op_attr_path, JSON.stringify(item), this.httpOptions)
       .pipe(

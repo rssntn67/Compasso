@@ -49,7 +49,7 @@ export class OperazioneCreatePage implements OnInit {
   }
 
   carica(cantiereId:string) {
-    const operazione = new Operazione(cantiereId,this.data.identificativo,'Carico');
+    const operazione = new Operazione(cantiereId,this.data.identificativo,'Carico',this.apiService.config.apiKey);
   
     this.apiService.creaOperazione(operazione).subscribe(response => {
       console.log(response);
@@ -58,7 +58,7 @@ export class OperazioneCreatePage implements OnInit {
   }
 
   scarica() {
-    const operazione = new Operazione(null,this.data.identificativo,'Scarico');
+    const operazione = new Operazione(null,this.data.identificativo,'Scarico',this.apiService.config.apiKey);
   
     this.apiService.creaOperazione(operazione).subscribe(response => {
       console.log(response);
@@ -67,7 +67,7 @@ export class OperazioneCreatePage implements OnInit {
   }
 
   rubato() {
-    const operazione = new Operazione(null,this.data.identificativo,'Furto');
+    const operazione = new Operazione(null,this.data.identificativo,'Furto',this.apiService.config.apiKey);
   
     this.apiService.creaOperazione(operazione).subscribe(response => {
       console.log(response);
@@ -76,7 +76,7 @@ export class OperazioneCreatePage implements OnInit {
   }
 
   rotto() {
-    const operazione = new Operazione(null,this.data.identificativo,'Rottura');
+    const operazione = new Operazione(null,this.data.identificativo,'Rottura',this.apiService.config.apiKey);
   
     this.apiService.creaOperazione(operazione).subscribe(response => {
       console.log(response);
@@ -85,7 +85,7 @@ export class OperazioneCreatePage implements OnInit {
   }
 
   smarrito() {
-    const operazione = new Operazione(null,this.data.identificativo,'Smarrimento');
+    const operazione = new Operazione(null,this.data.identificativo,'Smarrimento',this.apiService.config.apiKey);
   
     this.apiService.creaOperazione(operazione).subscribe(response => {
       console.log(response);
