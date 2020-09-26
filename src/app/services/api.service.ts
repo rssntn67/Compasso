@@ -8,17 +8,18 @@ import { Operazione } from '../models/operazione';
 import { Config } from '../models/config';
 import { Plugins, FilesystemDirectory, FilesystemEncoding } from '@capacitor/core';
 
-const {Filesystem} = Plugins;
+const {Storage} = Plugins;
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
 
-  attr_path = '/api/attrezzature';
-  cant_path = '/api/cantieri';
-  op_attr_path = '/api/operazione/attrezzatura';
-  config = new Config('http://localhost:8080','nokey');
+  private CONFIG_STORAGE: string = "CompassoConfiguration";
+  private attr_path: string = '/api/attrezzature';
+  private cant_path: string  = '/api/cantieri';
+  private op_attr_path: string = '/api/operazione/attrezzatura';
+  private config: Config;
   
   constructor(private http: HttpClient) { 
   }
@@ -29,7 +30,8 @@ export class ApiService {
     })
   }
 
-  creaOperazione(item): Observable<boolean> {
+  creaOperazione(item:Operazione): Observable<boolean> {
+    item.setApiKey(this.config.apiKey);
     console.log(item);
     return this.http
       .post<boolean>(this.config.baseUrl+this.op_attr_path, JSON.stringify(item), this.httpOptions)
@@ -88,38 +90,15 @@ export class ApiService {
   }
 
    async saveConfig(config: Config) {
-    try {
-      const result = await Filesystem.writeFile({
-        path: 'secrets/config.json',
-        data: JSON.stringify(config),
-        directory: FilesystemDirectory.Data,
-        encoding: FilesystemEncoding.UTF8
-      })
+     await Storage.set({key: this.CONFIG_STORAGE,
+      value: JSON.stringify(config)});
       this.config=config;
-      console.log('Wrote file', result, this.config);
-    } catch(e) {
-      console.error('Unable to write file', e);
-    }
-
+      console.log(this.config);
   }
 
   async loadSaved() {
-    try {
-      let ret = await Filesystem.stat({
-        path: 'secrets/config.json',
-        directory: FilesystemDirectory.Data
-      });
-      const readFile = await Filesystem.readFile({
-        path: 'secrets/config.json',
-        directory: FilesystemDirectory.Data
-      });
-      this.config = JSON.parse(readFile.data);
-      console.log('loadSaved: from cache', this.config);
-    } catch(e) {
-      this.saveConfig(this.config);
-      console.log('loadSaved: from default', this.config);
-    }
+    const savedConfig = await Storage.get({key: this.CONFIG_STORAGE});
+    this.saveConfig(JSON.parse(savedConfig.value) || new Config('http://localhost:8080','nokey'));
   }
-
 
 }

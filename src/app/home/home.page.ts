@@ -13,6 +13,4 @@ export class HomePage {
   async ngOnInit() {
     await this.apiService.loadSaved();
   }
-
-
 }
