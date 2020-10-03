@@ -98,7 +98,7 @@ export class ApiService {
 
   async loadSaved() {
     const savedConfig = await Storage.get({key: this.CONFIG_STORAGE});
-    this.saveConfig(JSON.parse(savedConfig.value) || new Config('http://localhost:8080','nokey'));
+    this.saveConfig(JSON.parse(savedConfig.value) || new Config('https://gardenia.arsinfo.it','fe8148db67d74da7bf0bf7624080bb4e'));
   }
 
 }
