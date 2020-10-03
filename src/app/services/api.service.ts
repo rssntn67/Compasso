@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
 import { Operabile } from '../models/operabile'
@@ -27,7 +27,7 @@ export class ApiService {
   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json'
-    })
+      })
   }
 
   creaOperazione(item:Operazione): Observable<boolean> {
@@ -59,7 +59,7 @@ export class ApiService {
 
   getAttrezzature(): Observable<Operabile> {
     return this.http
-      .get<Operabile>(this.config.baseUrl+this.attr_path)
+      .get<Operabile>(this.config.baseUrl+this.attr_path, {params: new HttpParams().set('apikey',this.config.apiKey)})
       .pipe(
         retry(2),
         catchError(this.handleError)
@@ -68,7 +68,7 @@ export class ApiService {
 
   getAttrezzatura(id): Observable<Operabile> {
     return this.http
-      .get<Operabile>(this.config.baseUrl+this.attr_path + '/' + id)
+      .get<Operabile>(this.config.baseUrl+this.attr_path + '/' + id, {params: new HttpParams().set('apikey',this.config.apiKey)})
       .pipe(
         retry(2),
         catchError(this.handleError)
@@ -82,7 +82,7 @@ export class ApiService {
 
   getCantieri(): Observable<Cantiere> {
     return this.http
-      .get<Cantiere>(this.config.baseUrl+this.cant_path)
+      .get<Cantiere>(this.config.baseUrl+this.cant_path, {params: new HttpParams().set('apikey',this.config.apiKey)})
       .pipe(
         retry(2),
         catchError(this.handleError)
