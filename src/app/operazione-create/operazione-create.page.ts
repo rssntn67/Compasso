@@ -16,11 +16,13 @@ export class OperazioneCreatePage implements OnInit {
   cantData: any;
   data: Operabile;
   id: string;
+  operabileIcon: string;
 
   constructor(public apiService: ApiService,public activatedRoute: ActivatedRoute,
     public router: Router) { 
     this.cantData=[];
     this.data = new Operabile();
+    this.operabileIcon='checkmark-circle';
   }
 
   ngOnInit() {
@@ -31,11 +33,18 @@ export class OperazioneCreatePage implements OnInit {
     this.apiService.getAttrezzatura(this.id).subscribe(response => {
       console.log(response);
       this.data = response;
+      if(this.data.stato.indexOf('Disponibile') >= 0) this.operabileIcon='checkmark-circle';
+      else this.operabileIcon='stopwatch';
+    
     })
     this.getCantieri();
   }
 
-  getIcon(cantiere){
+  getOperabileIcon() {
+    return this.operabileIcon;
+  }
+
+  getIcon(cantiere: Cantiere){
     if(cantiere.stato.indexOf('InOpera') >= 0) return 'checkmark-circle';
     else return 'stopwatch';
   }

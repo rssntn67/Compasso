@@ -6,22 +6,28 @@
 
 <ion-content color="primary" fullscreen>
 
+  <ion-button color="tertiary" size="default" routerLink='../home'>
+    <ion-icon name="home"></ion-icon>Home
+  </ion-button>
+
   <ion-list style="background: var(--ion-color-primary);">
 
     <ion-item color="primary" *ngFor="let todo of attrData">
       
       <div slot="">
-        <p><b>{{todo.identificativo}}</b></p>
-        <p><ion-icon [name]="getIcon(todo)"></ion-icon><i>{{todo.stato}}</i></p>
-        <p>{{todo.modello}}</p>
+        <p><ion-icon [name]="getIcon(todo)"></ion-icon>&nbsp;<i>{{todo.stato}}</i></p>
       </div>
 
       <div slot="">
+        <p>&nbsp;{{todo.modello}} - <b>{{todo.identificativo}}</b></p>
+      </div>
+
+      <div slot="end">
         <ion-button color="tertiary" size="small" routerLink='/operazione-create/{{todo.identificativo}}'>
           <ion-icon name="navigate-outline"></ion-icon>
           Gestisci
         </ion-button>
-            </div>
+      </div>
     </ion-item>
   </ion-list>
 

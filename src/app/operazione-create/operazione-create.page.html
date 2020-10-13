@@ -6,17 +6,38 @@
 
 <ion-content color="primary" fullscreen>
 
-  <ion-item color="warning">
+  <ion-button color="tertiary" size="default" routerLink='/attrezzature'>
+    <ion-icon name="notifications"></ion-icon>
+    Attrezzature
+  </ion-button>
+  <ion-button color="tertiary" size="default" routerLink='/home'>
+    <ion-icon name="home"></ion-icon>Home
+  </ion-button>
+
+  <ion-item color="secondary">
     <div slot="">
-    <p><b>{{data.identificativo}}</b> - <i>{{data.stato}}</i></p>
+      <ion-icon [name]="getOperabileIcon()"></ion-icon>&nbsp;<i>{{data.stato}}</i>
     </div>
     <div slot="">
-      <ion-button color="tertiary" size="small" (click)="scarica()"><ion-icon name="navigate-outline"></ion-icon>Scarica</ion-button>
+      &nbsp;{{data.modello}} - <b>{{data.identificativo}}</b>
     </div>
+  </ion-item>
+
+  <ion-item color="secondary">    
     <div slot="">
-      <ion-button color="tertiary" size="small" (click)="rubato()"><ion-icon name="navigate-outline"></ion-icon>Rubato</ion-button>
-      <ion-button color="tertiary" size="small" (click)="rotto()"><ion-icon name="navigate-outline"></ion-icon>Rotto</ion-button>
-      <ion-button color="tertiary" size="small" (click)="smarrito()"><ion-icon name="navigate-outline"></ion-icon>Smarrito</ion-button>
+      <p><ion-button color="tertiary" size="small" (click)="scarica()"><ion-icon name="navigate-outline"></ion-icon>Scarica</ion-button></p>
+    </div>
+    
+    <div slot="">
+      <p><ion-button color="tertiary" size="small" (click)="rubato()"><ion-icon name="navigate-outline"></ion-icon>Rubato</ion-button></p>
+    </div>
+    
+    <div slot="">
+        <p><ion-button color="tertiary" size="small" (click)="rotto()"><ion-icon name="navigate-outline"></ion-icon>Rotto</ion-button></p>
+    </div>
+    
+    <div slot="">
+        <p><ion-button color="tertiary" size="small" (click)="smarrito()"><ion-icon name="navigate-outline"></ion-icon>Smarrito</ion-button></p>
     </div>
   </ion-item>
 
@@ -24,13 +45,14 @@
 
     <ion-item color="primary" *ngFor="let cant of cantData">
       <div slot="">
-        <p><b>{{cant.identificativo}}</b></p>
-        <p>{{cant.tipo}}</p>
         <p><ion-icon [name]="getIcon(cant)"></ion-icon><i>{{cant.stato}}</i></p>
-        <p>sito In <i>{{cant.sitoIn}}</i></p>
+      </div>
+      
+      <div slot="">
+        <p>&nbsp;{{cant.tipo}} - <b>{{cant.identificativo}}</b> - <i>{{cant.sitoIn}}</i></p>
       </div>
 
-      <div slot="">
+      <div slot="end">
         <ion-button color="tertiary" size="small" (click)="carica(cant.identificativo)"><ion-icon name="navigate-outline"></ion-icon>Carica</ion-button>
       </div>
     </ion-item>
