@@ -1,4 +1,4 @@
-package io.ionic.starter;
+package it.arsinfo.ga;
 
 import android.os.Bundle;
 
