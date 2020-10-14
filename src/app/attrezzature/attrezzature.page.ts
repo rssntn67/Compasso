@@ -16,7 +16,8 @@ export class AttrezzaturePage implements OnInit {
   }
   
 
-  ngOnInit() {
+  async ngOnInit() {
+    await this.apiService.loadSaved();
   }
 
   async ionViewDidEnter() {

@@ -25,7 +25,8 @@ export class OperazioneCreatePage implements OnInit {
     this.operabileIcon='checkmark-circle';
   }
 
-  ngOnInit() {
+  async ngOnInit() {
+    await this.apiService.loadSaved();
   }
 
   ionViewWillEnter() {
@@ -35,9 +36,9 @@ export class OperazioneCreatePage implements OnInit {
       this.data = response;
       if(this.data.stato.indexOf('Disponibile') >= 0) this.operabileIcon='checkmark-circle';
       else this.operabileIcon='stopwatch';
-    
-    })
-    this.getCantieri();
+      this.getCantieri();
+      },
+      (error) => { this.router.navigate(['operazione-create-error/'+this.id])})
   }
 
   getOperabileIcon() {

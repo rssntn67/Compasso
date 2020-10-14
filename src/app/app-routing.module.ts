@@ -27,6 +27,10 @@ const routes: Routes = [
     path: 'config',
     loadChildren: () => import('./config/config.module').then( m => m.ConfigPageModule)
   },
+  {
+    path: 'operazione-create-error/:id',
+    loadChildren: () => import('./operazione-create-error/operazione-create-error.module').then( m => m.OperazioneCreateErrorPageModule)
+  },
 ];
 
 @NgModule({
