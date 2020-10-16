@@ -13,15 +13,17 @@ import { Operazione } from '../models/operazione';
 })
 export class OperazioneCreatePage implements OnInit {
 
-  cantData: any;
-  data: Operabile;
+  cantieri: any;
+  cantieriAll: any;
+  operabile: Operabile;
   id: string;
   operabileIcon: string;
 
   constructor(public apiService: ApiService,public activatedRoute: ActivatedRoute,
     public router: Router) { 
-    this.cantData=[];
-    this.data = new Operabile();
+    this.cantieri=[];
+    this.cantieriAll=[];
+    this.operabile = new Operabile();
     this.operabileIcon='checkmark-circle';
   }
 
@@ -33,8 +35,8 @@ export class OperazioneCreatePage implements OnInit {
     this.id = this.activatedRoute.snapshot.params["id"];
     this.apiService.getAttrezzatura(this.id).subscribe(response => {
       console.log(response);
-      this.data = response;
-      if(this.data.stato.indexOf('Disponibile') >= 0) this.operabileIcon='checkmark-circle';
+      this.operabile = response;
+      if(this.operabile.stato.indexOf('Disponibile') >= 0) this.operabileIcon='checkmark-circle';
       else this.operabileIcon='stopwatch';
       this.getCantieri();
       },
@@ -54,12 +56,13 @@ export class OperazioneCreatePage implements OnInit {
     //Get saved list of students
     this.apiService.getCantieri().subscribe(response => {
       console.log(response);
-      this.cantData = response;
+      this.cantieriAll = response;
+      this.cantieri=this.cantieriAll;
     })  
   }
 
   carica(cantiereId:string) {
-    const operazione = new Operazione(cantiereId,this.data.identificativo,'Carico');
+    const operazione = new Operazione(cantiereId,this.operabile.identificativo,'Carico');
   
     this.apiService.creaOperazione(operazione).subscribe(response => {
       console.log(response);
@@ -68,7 +71,7 @@ export class OperazioneCreatePage implements OnInit {
   }
 
   scarica() {
-    const operazione = new Operazione(null,this.data.identificativo,'Scarico');
+    const operazione = new Operazione(null,this.operabile.identificativo,'Scarico');
   
     this.apiService.creaOperazione(operazione).subscribe(response => {
       console.log(response);
@@ -77,7 +80,7 @@ export class OperazioneCreatePage implements OnInit {
   }
 
   rubato() {
-    const operazione = new Operazione(null,this.data.identificativo,'Furto');
+    const operazione = new Operazione(null,this.operabile.identificativo,'Furto');
   
     this.apiService.creaOperazione(operazione).subscribe(response => {
       console.log(response);
@@ -86,7 +89,7 @@ export class OperazioneCreatePage implements OnInit {
   }
 
   rotto() {
-    const operazione = new Operazione(null,this.data.identificativo,'Rottura');
+    const operazione = new Operazione(null,this.operabile.identificativo,'Rottura');
   
     this.apiService.creaOperazione(operazione).subscribe(response => {
       console.log(response);
@@ -95,12 +98,31 @@ export class OperazioneCreatePage implements OnInit {
   }
 
   smarrito() {
-    const operazione = new Operazione(null,this.data.identificativo,'Smarrimento');
+    const operazione = new Operazione(null,this.operabile.identificativo,'Smarrimento');
   
     this.apiService.creaOperazione(operazione).subscribe(response => {
       console.log(response);
     })
     this.router.navigate(['attrezzature']);
+  }
+
+  async filterList(evt) {
+    const search = evt.srcElement.value;
+    this.cantieri=this.cantieriAll;
+  
+    if (!search) {
+      return;
+    }
+
+  
+    this.cantieri = this.cantieri.filter(c => {
+      if (c.identificativo.toLowerCase().indexOf(search.toLowerCase()) > -1 ||
+            c.tipo.toLowerCase().indexOf(search.toLowerCase()) > -1 ||
+            c.sitoIn.toLowerCase().indexOf(search.toLowerCase()) > -1 ||
+            c.stato.toLowerCase().indexOf(search.toLowerCase()) > -1) {
+            return true
+        }
+    });
   }
 
 

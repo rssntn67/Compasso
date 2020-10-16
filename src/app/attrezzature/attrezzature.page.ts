@@ -9,10 +9,12 @@ import { Operabile } from '../models/operabile';
 })
 export class AttrezzaturePage implements OnInit {
 
-  attrData: any;
+  attrezzature: any;
+  attrezzatureAll: any;
 
   constructor(public apiService: ApiService) { 
-    this.attrData = [];
+    this.attrezzature = [];
+    this.attrezzatureAll = [];
   }
   
 
@@ -24,7 +26,7 @@ export class AttrezzaturePage implements OnInit {
     await this.getAttrezzature();
   }
   
-  getIcon(operabile){
+  getIcon(operabile: Operabile){
     if(operabile.stato.indexOf('Disponibile') >= 0) return 'checkmark-circle';
     else return 'stopwatch';
   }
@@ -33,8 +35,27 @@ export class AttrezzaturePage implements OnInit {
     //Get saved list of students
     await this.apiService.getAttrezzature().subscribe(response => {
       console.log(response);
-      this.attrData = response;
+      this.attrezzatureAll = response;
+      this.attrezzature = this.attrezzatureAll;
     })  
+  }
+
+  async filterList(evt) {
+    const search = evt.srcElement.value;
+    this.attrezzature=this.attrezzatureAll;
+  
+    if (!search) {
+      return;
+    }
+
+  
+    this.attrezzature = this.attrezzature.filter(a => {
+      if (a.identificativo.toLowerCase().indexOf(search.toLowerCase()) > -1 ||
+            a.modello.toLowerCase().indexOf(search.toLowerCase()) > -1 ||
+            a.stato.toLowerCase().indexOf(search.toLowerCase()) > -1) {
+            return true
+        }
+    });
   }
 
 }

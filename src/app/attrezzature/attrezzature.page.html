@@ -10,20 +10,26 @@
     <ion-icon name="home"></ion-icon>Home
   </ion-button>
 
+  <ion-searchbar
+      placeholder="Cerca Attrezzatura"
+      showcancelbutton=""
+    (ionInput)="filterList($event)"
+  ></ion-searchbar>
+
   <ion-list style="background: var(--ion-color-primary);">
 
-    <ion-item color="primary" *ngFor="let todo of attrData">
+    <ion-item color="primary" *ngFor="let attrezzatura of attrezzature">
       
       <div slot="">
-        <p><ion-icon [name]="getIcon(todo)"></ion-icon>&nbsp;<i>{{todo.stato}}</i></p>
+        <p><ion-icon [name]="getIcon(attrezzatura)"></ion-icon>&nbsp;<i>{{attrezzatura.stato}}</i></p>
       </div>
 
       <div slot="">
-        <p>&nbsp;{{todo.modello}} - <b>{{todo.identificativo}}</b></p>
+        <p>&nbsp;{{attrezzatura.modello}} - <b>{{attrezzatura.identificativo}}</b></p>
       </div>
 
       <div slot="end">
-        <ion-button color="tertiary" size="small" routerLink='/operazione-create/{{todo.identificativo}}'>
+        <ion-button color="tertiary" size="small" routerLink='/operazione-create/{{attrezzatura.identificativo}}'>
           <ion-icon name="navigate-outline"></ion-icon>
           Gestisci
         </ion-button>

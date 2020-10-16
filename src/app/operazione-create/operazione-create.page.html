@@ -10,16 +10,17 @@
     <ion-icon name="notifications"></ion-icon>
     Attrezzature
   </ion-button>
+
   <ion-button color="tertiary" size="default" routerLink='/home'>
     <ion-icon name="home"></ion-icon>Home
   </ion-button>
 
   <ion-item color="secondary">
     <div slot="">
-      <ion-icon [name]="getOperabileIcon()"></ion-icon>&nbsp;<i>{{data.stato}}</i>
+      <ion-icon [name]="getOperabileIcon()"></ion-icon>&nbsp;<i>{{operabile.stato}}</i>
     </div>
     <div slot="">
-      &nbsp;{{data.modello}} - <b>{{data.identificativo}}</b>
+      &nbsp;{{operabile.modello}} - <b>{{operabile.identificativo}}</b>
     </div>
   </ion-item>
 
@@ -31,8 +32,10 @@
     <div slot="">
       <p><ion-button color="tertiary" size="small" (click)="rubato()"><ion-icon name="navigate-outline"></ion-icon>Rubato</ion-button></p>
     </div>
+  </ion-item>
     
-    <div slot="">
+  <ion-item color="secondary">    
+      <div slot="">
         <p><ion-button color="tertiary" size="small" (click)="rotto()"><ion-icon name="navigate-outline"></ion-icon>Rotto</ion-button></p>
     </div>
     
@@ -41,9 +44,15 @@
     </div>
   </ion-item>
 
-<ion-list style="background: var(--ion-color-primary);">
+  <ion-searchbar
+  placeholder="Cerca Cantiere"
+  showcancelbutton=""
+(ionInput)="filterList($event)"
+  ></ion-searchbar>
 
-    <ion-item color="primary" *ngFor="let cant of cantData">
+  <ion-list style="background: var(--ion-color-primary);">
+
+    <ion-item color="primary" *ngFor="let cant of cantieri">
       <div slot="">
         <p><ion-icon [name]="getIcon(cant)"></ion-icon><i>{{cant.stato}}</i></p>
       </div>
